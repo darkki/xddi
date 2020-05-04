@@ -1,0 +1,27 @@
+xDiSKDRiVE-iNFO by darkk!
+xdiskdrive-info by darkk!
+xdiskdriveinfo by darkk!
+xddi by darkk!
+XD DRiVE-iNFO v0.4-0b by darkk!
+xD DRiVE-iNFO v0.4-0b by darkk!
+xd drive-info v0.4-0b by darkk!
+xddi v0.41b by darkk!
+
+Dev Version / XX/04/2020
+- 
+
+Dev Version / 27/04/2020
+- Added support for removable, network and optical drives
+- First pass of code cleanup
+- Color theme almost final
+- Color and mono output (not yet switchable)
+
+Dev Version / 22/04/2020
+- Added basic color support
+- Local drive information working
+
+Dev Version / 21/04/2020
+- Very basic local drive information display working
+
+Dev Version / 20/04/2020
+- Devlopment started!
