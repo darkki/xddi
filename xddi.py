@@ -38,6 +38,7 @@ def commafy(string, range = 3, seperator = ","): # function to add seperator to 
     return(return_string)
 
 def used_bar(percentage_used, color = True): # returns percentage used bar #TODO: Modify/create so it takes input how long bar and creates and returns that
+    percentage_used = 100 - percentage_used
     if color == True:
         if percentage_used >= 0 and percentage_used <= 5:
             return("[     ]")
