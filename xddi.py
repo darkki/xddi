@@ -43,84 +43,84 @@ def commafy(string, range = 3, seperator = ","): # function to add seperator to 
     return(return_string)
 
 def used_bar(percentage_used, color = True): # returns percentage used bar #TODO: Modify/create so it takes input how long bar and creates and returns that
-  if color == True:
-    if percentage_used >= 0 and percentage_used <= 5:
-        return("[     ]")
-    elif percentage_used >= 5 and percentage_used <= 15:
-        return(f"[{Fore.GREEN}.    {Style.RESET_ALL}]")
-    elif percentage_used >= 15 and percentage_used <= 25:
-        return(f"[{Fore.GREEN}:    {Style.RESET_ALL}]")
-    elif percentage_used >= 25 and percentage_used <= 35:
-        return(f"[{Fore.GREEN}:.   {Style.RESET_ALL}]")
-    elif percentage_used >= 35 and percentage_used <= 45:
-        return(f"[{Fore.GREEN}::   {Style.RESET_ALL}]")
-    elif percentage_used >= 45 and percentage_used <= 55:
-        return(f"[{Fore.YELLOW}::.  {Style.RESET_ALL}]")
-    elif percentage_used >= 55 and percentage_used <= 65:
-        return(f"[{Fore.YELLOW}:::  {Style.RESET_ALL}]")
-    elif percentage_used >= 65 and percentage_used <= 75:
-        return(f"[{Fore.YELLOW}:::. {Style.RESET_ALL}]")
-    elif percentage_used >= 75 and percentage_used <= 85:
-        return(f"[{Fore.YELLOW}:::: {Style.RESET_ALL}]")
-    elif percentage_used >= 85 and percentage_used <= 95:
-        return(f"[{Fore.RED}::::.{Style.RESET_ALL}]")
-    elif percentage_used >= 95 and percentage_used <= 100:
-        return(f"[{Fore.RED}:::::{Style.RESET_ALL}]")
-  else:
-    if percentage_used >= 0 and percentage_used <= 5:
-        return("[     ]")
-    elif percentage_used >= 5 and percentage_used <= 15:
-        return("[.    ]")
-    elif percentage_used >= 15 and percentage_used <= 25:
-        return("[:    ]")
-    elif percentage_used >= 25 and percentage_used <= 35:
-        return("[:.   ]")
-    elif percentage_used >= 35 and percentage_used <= 45:
-        return("[::   ]")
-    elif percentage_used >= 45 and percentage_used <= 55:
-        return("[::.  ]")
-    elif percentage_used >= 55 and percentage_used <= 65:
-        return("[:::  ]")
-    elif percentage_used >= 65 and percentage_used <= 75:
-        return("[:::. ]")
-    elif percentage_used >= 75 and percentage_used <= 85:
-        return("[:::: ]")
-    elif percentage_used >= 85 and percentage_used <= 95:
-        return("[::::.]")
-    elif percentage_used >= 95 and percentage_used <= 100:
-        return("[:::::]")
-
-def local_disk_drives(color = True): # function to handle local disk drives #TODO: handle every type of drives via this same function 
-  all_drive_space = 0
-  all_space_free = 0
-  volume_name_space = 14
-  volume_name_fillchar = " "
-  for disk in c.Win32_LogicalDisk(DriveType=3): # goes trough all logical disks
-    letter = disk.Caption
-    volume_name = disk.VolumeName.center(volume_name_space, volume_name_fillchar)
-    filesystem = disk.FileSystem.center(5)
-    free_space = int(disk.FreeSpace)
-    free_space_kb = round(free_space // 1000, 0)
-    total_space = int(disk.Size)
-    total_space_kb = round(total_space // 1000, 0)
-    space_used_percentage = round(free_space / total_space * 100, 1)
-    space_used_percentage_print = str(space_used_percentage).rjust(4)
-    # compressed = disk.Compressed
-    # quotas = disk.SupportsDiskQuotas
-    filebased_compression_support = disk.SupportsFileBasedCompression
-    all_drive_space += total_space
-    all_space_free += free_space
-    free_space_kb = commafy(free_space_kb).rjust(14, " ")
-    total_space_kb = commafy(total_space_kb).rjust(14)
-    flag_var = ""
-    if filebased_compression_support == True:
-        flag_var += f"FBC"
-    else:
-        flag_var += f"   "
     if color == True:
-      print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+        if percentage_used >= 0 and percentage_used <= 5:
+            return("[     ]")
+        elif percentage_used >= 5 and percentage_used <= 15:
+            return(f"[{Fore.GREEN}.    {Style.RESET_ALL}]")
+        elif percentage_used >= 15 and percentage_used <= 25:
+            return(f"[{Fore.GREEN}:    {Style.RESET_ALL}]")
+        elif percentage_used >= 25 and percentage_used <= 35:
+            return(f"[{Fore.GREEN}:.   {Style.RESET_ALL}]")
+        elif percentage_used >= 35 and percentage_used <= 45:
+            return(f"[{Fore.GREEN}::   {Style.RESET_ALL}]")
+        elif percentage_used >= 45 and percentage_used <= 55:
+            return(f"[{Fore.YELLOW}::.  {Style.RESET_ALL}]")
+        elif percentage_used >= 55 and percentage_used <= 65:
+            return(f"[{Fore.YELLOW}:::  {Style.RESET_ALL}]")
+        elif percentage_used >= 65 and percentage_used <= 75:
+            return(f"[{Fore.YELLOW}:::. {Style.RESET_ALL}]")
+        elif percentage_used >= 75 and percentage_used <= 85:
+            return(f"[{Fore.YELLOW}:::: {Style.RESET_ALL}]")
+        elif percentage_used >= 85 and percentage_used <= 95:
+            return(f"[{Fore.RED}::::.{Style.RESET_ALL}]")
+        elif percentage_used >= 95 and percentage_used <= 100:
+            return(f"[{Fore.RED}:::::{Style.RESET_ALL}]")
     else:
-      print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+        if percentage_used >= 0 and percentage_used <= 5:
+            return("[     ]")
+        elif percentage_used >= 5 and percentage_used <= 15:
+            return("[.    ]")
+        elif percentage_used >= 15 and percentage_used <= 25:
+            return("[:    ]")
+        elif percentage_used >= 25 and percentage_used <= 35:
+            return("[:.   ]")
+        elif percentage_used >= 35 and percentage_used <= 45:
+            return("[::   ]")
+        elif percentage_used >= 45 and percentage_used <= 55:
+            return("[::.  ]")
+        elif percentage_used >= 55 and percentage_used <= 65:
+            return("[:::  ]")
+        elif percentage_used >= 65 and percentage_used <= 75:
+            return("[:::. ]")
+        elif percentage_used >= 75 and percentage_used <= 85:
+            return("[:::: ]")
+        elif percentage_used >= 85 and percentage_used <= 95:
+            return("[::::.]")
+        elif percentage_used >= 95 and percentage_used <= 100:
+            return("[:::::]")
+
+def local_disk_drives(color = True): # function to handle local disk drives #TODO: handle every type of drives via this same function
+    all_drive_space = 0
+    all_space_free = 0
+    volume_name_space = 14
+    volume_name_fillchar = " "
+    for disk in c.Win32_LogicalDisk(DriveType=3): # goes trough all logical disks
+        letter = disk.Caption
+        volume_name = disk.VolumeName.center(volume_name_space, volume_name_fillchar)
+        filesystem = disk.FileSystem.center(5)
+        free_space = int(disk.FreeSpace)
+        free_space_kb = round(free_space // 1000, 0)
+        total_space = int(disk.Size)
+        total_space_kb = round(total_space // 1000, 0)
+        space_used_percentage = round(free_space / total_space * 100, 1)
+        space_used_percentage_print = str(space_used_percentage).rjust(4)
+        # compressed = disk.Compressed
+        # quotas = disk.SupportsDiskQuotas
+        filebased_compression_support = disk.SupportsFileBasedCompression
+        all_drive_space += total_space
+        all_space_free += free_space
+        free_space_kb = commafy(free_space_kb).rjust(14, " ")
+        total_space_kb = commafy(total_space_kb).rjust(14)
+        flag_var = ""
+        if filebased_compression_support == True:
+            flag_var += f"FBC"
+        else:
+            flag_var += f"   "
+        if color == True:
+        print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+        else:
+        print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
 
 def check_type(drive_type): # checks if any drives of this type exists or not
     for disk in c.Win32_LogicalDisk(DriveType=drive_type):
