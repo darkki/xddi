@@ -13,7 +13,7 @@ c = wmi.WMI()
 
 class app_info:
     # version = "0.0.0-0d" # major.minor.patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
-    version = "27/4/2020|Dev" # dev version
+    version = "04/05/2020|Dev" # dev version
     infoline_beta = "] xDiSKDRiVE-iNFO v0.4b by darkk! ["
     infoline = "] xD DRiVE-iNFO v" + version + " by darkk! ["
     header = infoline.center(90, "-")
@@ -195,8 +195,8 @@ def network_drives(color = True): #function to handle network drives
         total_space_kb = commafy(total_space_kb).rjust(14)
         flag_var = ""
         if filebased_compression_support == True and color:
-            flag_var += f"{Fore.YELLOW}R/W{Style.RESET_ALL}"
-        elif filebased_compression_support == True and color == False:
+            flag_var += f"{Fore.YELLOW}R{Style.RESET_ALL}/{Fore.YELLOW}W{Style.RESET_ALL}"
+        elif filebased_compression_support == "001" and color == False:
             flag_var += f"R/W"
         else:
             flag_var += f"   "
@@ -279,7 +279,3 @@ else:
     pass
 
 print("\n" + app_info.footer + "\n")
-
-#TODO: argument parsing [argparse]
-#TODO: flags, network ProviderName, kb to optical size, layers / dvd/cdrom type to opticals
-#TODO: if exists swapfile and windows dir!

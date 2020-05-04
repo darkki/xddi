@@ -1,14 +1,10 @@
-xDiSKDRiVE-iNFO by darkk!
-xdiskdrive-info by darkk!
-xdiskdriveinfo by darkk!
-xddi by darkk!
-XD DRiVE-iNFO v0.4-0b by darkk!
-xD DRiVE-iNFO v0.4-0b by darkk!
-xd drive-info v0.4-0b by darkk!
-xddi v0.41b by darkk!
-
-Dev Version / XX/04/2020
+Dev Version / XX/05/2020
 - 
+
+Dev Version / 04/05/2020
+- Fixed percentage used bar
+- Added System Drive / Pagefile detection
+- Color corrections and additions
 
 Dev Version / 27/04/2020
 - Added support for removable, network and optical drives
