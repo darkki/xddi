@@ -159,7 +159,9 @@ def removable_disks(color = True): # function to handle removable disks
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         flag_var = ""
-        if dirty_volume == True:
+        if dirty_volume == True and color:
+            flag_var += f"{Fore.RED}DRT{Style.RESET_ALL}"
+        elif dirty_volume == True and color == False:
             flag_var += f"DRT"
         else:
             flag_var += f"   "
@@ -192,8 +194,10 @@ def network_drives(color = True): #function to handle network drives
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         flag_var = ""
-        if filebased_compression_support == True:
-            flag_var += f"FBC"
+        if filebased_compression_support == True and color:
+            flag_var += f"{Fore.YELLOW}R/W{Style.RESET_ALL}"
+        elif filebased_compression_support == True and color == False:
+            flag_var += f"R/W"
         else:
             flag_var += f"   "
         if color == True:
@@ -224,13 +228,9 @@ def optical_drives(color = True): #function to handle network drives
         all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
-        flag_var = ""
-        if filebased_compression_support == True:
-            flag_var += f"FBC"
-        else:
-            flag_var += f"   "
+        flag_var = "   "
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {total_space_kb} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {description} [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] [:::::]")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {total_space_kb} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {description} [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] [{Style.BRIGHT}:::::{Style.RESET_ALL}]")
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {total_space_kb} (--.- %) / {description} [{filesystem[0:5]}] - [{flag_var}] [:::::]")
 
