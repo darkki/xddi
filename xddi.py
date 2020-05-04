@@ -6,12 +6,7 @@ from colorama import init # colorama module for colorization / ansi support
 init()
 from colorama import Fore,Back,Style
 
-# import os # os module for checking if file exists
-# from os import path
-
-# import pickle # module to load/save instances, objects, dicts, etc.
-
-# import os
+import os.path
 
 import wmi
 c = wmi.WMI()
@@ -96,6 +91,21 @@ def local_disk_drives(color = True): # function to handle local disk drives #TOD
     volume_name_space = 14
     volume_name_fillchar = " "
     for disk in c.Win32_LogicalDisk(DriveType=3): # goes trough all logical disks
+        swapfile_var = disk.Caption
+        swapfile_var += "/pagefile.sys"
+        windowsdir_var = disk.Caption
+        windowsdir_var += "/Windows"
+        flag_var = ""
+        if os.path.exists(windowsdir_var) and color:
+            flag_var += f"{Fore.GREEN}SYS{Style.RESET_ALL}"
+        elif os.path.exists(windowsdir_var) and color == False:
+            flag_var += f"SYS"
+        elif os.path.isfile(swapfile_var) and color:
+            flag_var += f"{Fore.CYAN}PF {Style.RESET_ALL}"
+        elif os.path.isfile(swapfile_var) and color == False:
+            flag_var += f"PF "
+        else:
+            flag_var = "   "
         letter = disk.Caption
         volume_name = disk.VolumeName.center(volume_name_space, volume_name_fillchar)
         filesystem = disk.FileSystem.center(5)
@@ -112,15 +122,10 @@ def local_disk_drives(color = True): # function to handle local disk drives #TOD
         all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
-        flag_var = ""
-        if filebased_compression_support == True:
-            flag_var += f"FBC"
-        else:
-            flag_var += f"   "
         if color == True:
-        print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
         else:
-        print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
 
 def check_type(drive_type): # checks if any drives of this type exists or not
     for disk in c.Win32_LogicalDisk(DriveType=drive_type):
