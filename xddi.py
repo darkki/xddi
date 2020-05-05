@@ -6,6 +6,7 @@ from colorama import init # colorama module for colorization / ansi support
 init()
 from colorama import Fore,Back,Style
 
+import os
 import os.path
 
 import wmi
@@ -193,13 +194,21 @@ def network_drives(color = True): #function to handle network drives
         all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
+        write_test_path = letter + "/xddi_wt"
         flag_var = ""
-        if filebased_compression_support == True and color:
-            flag_var += f"{Fore.YELLOW}R{Style.RESET_ALL}/{Fore.YELLOW}W{Style.RESET_ALL}"
-        elif filebased_compression_support == "001" and color == False:
-            flag_var += f"R/W"
+        try:
+            os.mkdir(write_test_path)
+            os.rmdir(write_test_path)
+        except OSError:
+            if color:
+                flag_var += f"{Fore.YELLOW}R{Style.RESET_ALL}/ "
+            else:
+                flag_var += f"R/ "
         else:
-            flag_var += f"   "
+            if color:
+                flag_var += f"{Fore.YELLOW}R{Style.RESET_ALL}/{Fore.YELLOW}W{Style.RESET_ALL}"
+            else:
+                flag_var += f"R/W"
         if color == True:
             print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
         else:
