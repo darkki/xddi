@@ -171,7 +171,7 @@ def removable_disks(color = True): # function to handle removable disks
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
 
-def network_drives(color = True): #function to handle network drives
+def network_drives(color = True, show_network_path = True): #function to handle network drives
     all_drive_space = 0
     all_space_free = 0
     volume_name_space = 14
@@ -189,6 +189,8 @@ def network_drives(color = True): #function to handle network drives
         # compressed = disk.Compressed
         # quotas = disk.SupportsDiskQuotas
         network_path = disk.ProviderName
+        network_path_v1 = network_path.upper().center(40)
+        network_path_v2 = network_path.upper()
         filebased_compression_support = disk.SupportsFileBasedCompression
         all_drive_space += total_space
         all_space_free += free_space
@@ -211,8 +213,17 @@ def network_drives(color = True): #function to handle network drives
                 flag_var += f"R/W"
         if color == True:
             print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+            # print(f" {Style.BRIGHT}->{Style.RESET_ALL} [{Style.BRIGHT}{network_path_v1}{Style.RESET_ALL}]")
+            if show_network_path:
+                print(f" {Style.BRIGHT}->{Style.RESET_ALL} {network_path_v2}")
+            else:
+                pass
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+            if show_network_path:
+                print(f" -> {network_path_v2}")
+            else:
+                pass
 
 def optical_drives(color = True): #function to handle network drives
     all_drive_space = 0
