@@ -88,8 +88,6 @@ def used_bar(percentage_used, color = True): # returns percentage used bar #TODO
             return("[:::::]")
 
 def local_disk_drives(color = True): # function to handle local disk drives #TODO: handle every type of drives via this same function
-    all_drive_space = 0
-    all_space_free = 0
     volume_name_space = 14
     volume_name_fillchar = " "
     for disk in c.Win32_LogicalDisk(DriveType=3): # goes trough all logical disks
@@ -120,8 +118,6 @@ def local_disk_drives(color = True): # function to handle local disk drives #TOD
         # compressed = disk.Compressed
         # quotas = disk.SupportsDiskQuotas
         filebased_compression_support = disk.SupportsFileBasedCompression
-        all_drive_space += total_space
-        all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         if color == True:
@@ -137,8 +133,6 @@ def check_type(drive_type): # checks if any drives of this type exists or not
             return(True)
 
 def removable_disks(color = True): # function to handle removable disks
-    all_drive_space = 0
-    all_space_free = 0
     volume_name_space = 14
     volume_name_fillchar = " "
     for disk in c.Win32_LogicalDisk(DriveType=2): # goes trough all logical disks
@@ -155,8 +149,6 @@ def removable_disks(color = True): # function to handle removable disks
         # quotas = disk.SupportsDiskQuotas
         # filebased_compression_support = disk.SupportsFileBasedCompression
         dirty_volume = disk.VolumeDirty
-        all_drive_space += total_space
-        all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         flag_var = ""
@@ -172,8 +164,6 @@ def removable_disks(color = True): # function to handle removable disks
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
 
 def network_drives(color = True, show_network_path = True): #function to handle network drives
-    all_drive_space = 0
-    all_space_free = 0
     volume_name_space = 14
     volume_name_fillchar = " "
     for disk in c.Win32_LogicalDisk(DriveType=4): # goes trough all logical disks
@@ -192,8 +182,6 @@ def network_drives(color = True, show_network_path = True): #function to handle 
         network_path_v1 = network_path.upper().center(40)
         network_path_v2 = network_path.upper()
         filebased_compression_support = disk.SupportsFileBasedCompression
-        all_drive_space += total_space
-        all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         write_test_path = letter + "/xddi_wt"
@@ -226,8 +214,6 @@ def network_drives(color = True, show_network_path = True): #function to handle 
                 pass
 
 def optical_drives(color = True): #function to handle network drives
-    all_drive_space = 0
-    all_space_free = 0
     volume_name_space = 14
     volume_name_fillchar = " "
     for disk in c.Win32_LogicalDisk(DriveType=5): # goes trough all logical disks
@@ -244,8 +230,6 @@ def optical_drives(color = True): #function to handle network drives
         # compressed = disk.Compressed
         # quotas = disk.SupportsDiskQuotas
         filebased_compression_support = disk.SupportsFileBasedCompression
-        all_drive_space += total_space
-        all_space_free += free_space
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         flag_var = "   "
@@ -253,6 +237,61 @@ def optical_drives(color = True): #function to handle network drives
             print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {total_space_kb} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {description} [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] [{Style.BRIGHT}:::::{Style.RESET_ALL}]")
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {total_space_kb} (--.- %) / {description} [{filesystem[0:5]}] - [{flag_var}] [:::::]")
+
+def totals(color = True):
+    all_space_total = 0
+    all_space_free = 0
+    for disk in c.Win32_LogicalDisk(DriveType=3):
+        free_space = int(disk.FreeSpace)
+        all_space_free += round(free_space // 1000, 0)
+        total_space = int(disk.Size)
+        all_space_total += round(total_space // 1000, 0)
+    if check_type(2) == True:
+        for disk in c.Win32_LogicalDisk(DriveType=2):
+            free_space = int(disk.FreeSpace)
+            all_space_free += round(free_space // 1000, 0)
+            total_space = int(disk.Size)
+            all_space_total += round(total_space // 1000, 0)
+    else:
+        pass
+    if check_type(4) == True:
+        for disk in c.Win32_LogicalDisk(DriveType=4):
+            free_space = int(disk.FreeSpace)
+            all_space_free += round(free_space // 1000, 0)
+            total_space = int(disk.Size)
+            all_space_total += round(total_space // 1000, 0)
+    else:
+        pass
+    all_used_percentage = round(100 - all_space_free / all_space_total * 100, 1)
+    all_used_percentage = str(all_used_percentage).rjust(23)
+    all_space_used = all_space_total - all_space_free
+    all_space_total = commafy(all_space_total).rjust(23)
+    all_space_used = commafy(all_space_used).rjust(23)
+    all_space_free = commafy(all_space_free).rjust(23)
+    for cs in c.Win32_ComputerSystem():
+        memory_total = int(cs.TotalPhysicalMemory)
+    for perfos_mem in c.Win32_PerfFormattedData_PerfOS_Memory():
+        memory_free = int(perfos_mem.AvailableBytes)
+    memory_total = round(memory_total // 1000, 0)
+    memory_free = round(memory_free // 1000, 0)
+    memory_used = memory_total - memory_free
+    memory_percentage = round(100 - memory_free / memory_total * 100, 1)
+    memory_percentage = str(memory_percentage).rjust(15)
+    memory_total = commafy(memory_total).rjust(15)
+    memory_free = commafy(memory_free).rjust(15)
+    memory_used = commafy(memory_used).rjust(15)
+    if color == True:
+        print()
+        print(f" total drivespace : {Style.BRIGHT}{all_space_total}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory      : {Style.BRIGHT}{memory_total}{Style.RESET_ALL} kb")
+        print(f" total space used : {Style.BRIGHT}{all_space_used}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory used : {Style.BRIGHT}{memory_used}{Style.RESET_ALL} kb")
+        print(f" total space free : {Style.BRIGHT}{all_space_free}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory free : {Style.BRIGHT}{memory_free}{Style.RESET_ALL} kb")
+        print(f" percentage used  : {Style.BRIGHT}{all_used_percentage}{Style.RESET_ALL} %  {Style.BRIGHT}-{Style.RESET_ALL}   percentage used   : {Style.BRIGHT}{memory_percentage}{Style.RESET_ALL} %")
+    else:
+        print()
+        print(f" total drivespace : {all_space_total} kb -   total memory      : {memory_total} kb")
+        print(f" total space used : {all_space_used} kb -   total memory used : {memory_used} kb")
+        print(f" total space free : {all_space_free} kb -   total memory free : {memory_free} kb")
+        print(f" percentage used  : {all_used_percentage} %  -   percentage used   : {memory_percentage} %")
 
 # for os in c.Win32_OperatingSystem():
 #   print(os.Caption)
@@ -297,5 +336,7 @@ if check_type(5) == True: # checks if there are any optical drives, if found pri
     optical_drives()
 else:
     pass
+
+totals()
 
 print("\n" + app_info.footer + "\n")
