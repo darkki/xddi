@@ -226,17 +226,17 @@ def optical_drives(color = True): #function to handle network drives
         total_space_kb = round(total_space // 1000, 0)
         space_used_percentage = round(free_space / total_space * 100, 1)
         space_used_percentage_print = str(space_used_percentage).rjust(4)
-        description = str(disk.Description).rjust(17).upper()
+        description = str(disk.Description).rjust(14).upper()
         # compressed = disk.Compressed
         # quotas = disk.SupportsDiskQuotas
         filebased_compression_support = disk.SupportsFileBasedCompression
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
-        flag_var = "   "
+        # flag_var = "R/ "
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {total_space_kb} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {description} [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] [{Style.BRIGHT}:::::{Style.RESET_ALL}]")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {description} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}---{Style.RESET_ALL}] [{Style.BRIGHT}-----{Style.RESET_ALL}]")
         else:
-            print(f" {letter} [{volume_name[0:volume_name_space]}] - {total_space_kb} (--.- %) / {description} [{filesystem[0:5]}] - [{flag_var}] [:::::]")
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {description} (--.- %) / {total_space_kb} kb [{filesystem[0:5]}] - [---] [-----]")
 
 def totals(color = True):
     all_space_total = 0
