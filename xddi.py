@@ -234,7 +234,7 @@ def optical_drives(color = True): #function to handle network drives
         total_space_kb = commafy(total_space_kb).rjust(14)
         # flag_var = "R/ "
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {description} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}---{Style.RESET_ALL}] [{Style.BRIGHT}-----{Style.RESET_ALL}]")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {description} ({Style.BRIGHT}--.- %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [---] [-----]")
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {description} (--.- %) / {total_space_kb} kb [{filesystem[0:5]}] - [---] [-----]")
 
