@@ -1,4 +1,5 @@
 import datetime # datetime module for datetime
+from datetime import date
 date_time_now = "[ " + str(datetime.datetime.now()) + " ]"
 import time # time module for tictoc
 
@@ -14,11 +15,13 @@ c = wmi.WMI()
 
 class app_info:
     # version = "0.0.0-0d" # major.minor.patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
-    version = "04/05/2020|Dev" # dev version
-    infoline_beta = "] xDiSKDRiVE-iNFO v0.4b by darkk! ["
-    infoline = "] xD DRiVE-iNFO v" + version + " by darkk! ["
+    app = "xddi"
+    by = "darkki"
+    version = "08/05/2020|dev" # dev version
+    # infoline_beta = "] xDiSKDRiVE-iNFO v0.4b by darkk! ["
+    infoline = f"] {app} v{version} by {by} ["
     header = infoline.center(90, "-")
-    infoline2 = "] NZTi! ["
+    infoline2 = "] xddi -h for help! ["
     footer = infoline2.center(90,"-")
 
 def commafy(string, range = 3, seperator = ","): # function to add seperator to string between x number of chars
