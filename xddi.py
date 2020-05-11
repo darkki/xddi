@@ -122,7 +122,7 @@ def local_disk_drives(color = True): # function to handle local disk drives #TOD
         space_used_percentage_print = str(space_used_percentage).rjust(4)
         # compressed = disk.Compressed
         # quotas = disk.SupportsDiskQuotas
-        filebased_compression_support = disk.SupportsFileBasedCompression
+        # filebased_compression_support = disk.SupportsFileBasedCompression
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         if color == True:
@@ -150,9 +150,6 @@ def removable_disks(color = True): # function to handle removable disks
         total_space_kb = round(total_space // 1000, 0)
         space_used_percentage = round(free_space / total_space * 100, 1)
         space_used_percentage_print = str(space_used_percentage).rjust(4)
-        # compressed = disk.Compressed
-        # quotas = disk.SupportsDiskQuotas
-        # filebased_compression_support = disk.SupportsFileBasedCompression
         dirty_volume = disk.VolumeDirty
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
@@ -181,12 +178,9 @@ def network_drives(color = True, show_network_path = True): #function to handle 
         total_space_kb = round(total_space // 1000, 0)
         space_used_percentage = round(free_space / total_space * 100, 1)
         space_used_percentage_print = str(space_used_percentage).rjust(4)
-        # compressed = disk.Compressed
-        # quotas = disk.SupportsDiskQuotas
         network_path = disk.ProviderName
-        network_path_v1 = network_path.upper().center(40)
         network_path_v2 = network_path.upper()
-        filebased_compression_support = disk.SupportsFileBasedCompression
+        # filebased_compression_support = disk.SupportsFileBasedCompression
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         write_test_path = letter + "/xddi_wt"
@@ -206,7 +200,6 @@ def network_drives(color = True, show_network_path = True): #function to handle 
                 flag_var += f"R/W"
         if color == True:
             print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
-            # print(f" {Style.BRIGHT}->{Style.RESET_ALL} [{Style.BRIGHT}{network_path_v1}{Style.RESET_ALL}]")
             if show_network_path:
                 print(f" {Style.BRIGHT}->{Style.RESET_ALL} {network_path_v2}")
             else:
@@ -225,16 +218,9 @@ def optical_drives(color = True): #function to handle network drives
         letter = disk.Caption
         volume_name = disk.VolumeName.center(volume_name_space, volume_name_fillchar)
         filesystem = disk.FileSystem.center(5)
-        free_space = int(disk.FreeSpace)
-        free_space_kb = round(free_space // 1000, 0)
         total_space = int(disk.Size)
         total_space_kb = round(total_space // 1000, 0)
-        space_used_percentage = round(free_space / total_space * 100, 1)
-        space_used_percentage_print = str(space_used_percentage).rjust(4)
         description = str(disk.Description).rjust(14).upper()
-        # compressed = disk.Compressed
-        # quotas = disk.SupportsDiskQuotas
-        filebased_compression_support = disk.SupportsFileBasedCompression
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         # flag_var = "R/ "
@@ -297,28 +283,6 @@ def totals(color = True):
         print(f" total space used : {all_space_used} kb -   total memory used : {memory_used} kb")
         print(f" total space free : {all_space_free} kb -   total memory free : {memory_free} kb")
         print(f" percentage used  : {all_used_percentage} %  -   percentage used   : {memory_percentage} %")
-
-# for os in c.Win32_OperatingSystem():
-#   print(os.Caption)
-
-
-# print('OS is: {0}'.format(c.Win32_OperatingSystem()[0].Caption))
-# print('Disk freespace {0} - total {1}'.format(c.Win32_LogicalDisk()[0].Freespace,c.Win32_LogicalDisk()[0].Size))
-# print('Total Memory: {0}'.format(c.Win32_ComputerSystem()[0].TotalPhysicalMemory))
-
-# wql = "SELECT IPAddress FROM Win32_NetworkAdapterConfiguration WHERE IPEnabled = 'True'"
-# print('Local IP address: {0}'.format(''.join(c.query(wql)[0].IPAddress)))
-
-# print(f"free space {c.Win32_LogicalDisk()[1].Size}")
-
-# for disk in c.Win32_LogicalDisk():
-#   print(disk)
-
-# for disk in c.Win32_LogicalDisk():
-#   print(disk.Caption)
-
-# for disk in c.Win32_LogicalDisk(["Caption"], DriveType=3):
-#   print(disk)
 
 parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other information")
 parser.add_argument("-v", "--version", action="version", version="%(prog)s add_me!")
