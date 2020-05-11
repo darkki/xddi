@@ -16,10 +16,10 @@ c = wmi.WMI()
 import argparse
 
 class app_info:
-    # version = "0.0.0-0d" # major.minor.patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
+    # version = "0.00-0d" # major.minor|patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
     app = "xddi"
     by = "darkki"
-    version = "08/05/2020|dev" # dev version
+    version = "0.4b" # dev version #* Remember to modify parser, readme and whatnew versions too!
     # infoline_beta = "] xDiSKDRiVE-iNFO v0.4b by darkk! ["
     infoline = f"] {app} v{version} by {by} ["
     header = infoline.center(90, "-")
@@ -285,7 +285,7 @@ def totals(color = True):
         print(f" percentage used  : {all_used_percentage} %  -   percentage used   : {memory_percentage} %")
 
 parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other information")
-parser.add_argument("-v", "--version", action="version", version="%(prog)s add_me!")
+parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.4b")
 parser.add_argument("-m", "--mono", help="output in monochrome", action="store_false")
 parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
 args = parser.parse_args()
@@ -315,3 +315,5 @@ else:
 totals()
 
 print("\n" + app_info.footer + "\n")
+
+print(args.mono)

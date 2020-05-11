@@ -1,5 +1,11 @@
-Dev Version / XX/05/2020
-- 
+v0.4b / 11/05/2020
+- Added argument parsing
+- Added read/write detection on network drives
+- Added network path display on network drives
+- Added drive and memory totals
+- Rearranged optical drives info
+- Color optimizations
+- Code cleaned / optimized
 
 Dev Version / 04/05/2020
 - Fixed percentage used bar
