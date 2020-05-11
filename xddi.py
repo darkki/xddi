@@ -13,6 +13,8 @@ import os.path
 import wmi
 c = wmi.WMI()
 
+import argparse
+
 class app_info:
     # version = "0.0.0-0d" # major.minor.patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
     app = "xddi"
@@ -318,25 +320,31 @@ def totals(color = True):
 # for disk in c.Win32_LogicalDisk(["Caption"], DriveType=3):
 #   print(disk)
 
-print(f"{Style.NORMAL}\n{app_info.header}\n{Style.RESET_ALL}")
+parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other information")
+parser.add_argument("-v", "--version", action="version", version="%(prog)s add_me!")
+parser.add_argument("-m", "--mono", help="output in monochrome", action="store_false")
+parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
+args = parser.parse_args()
+
+print(f"\n{app_info.header}\n")
 print("local drives:")
-local_disk_drives()
+local_disk_drives(args.mono)
 
 if check_type(2) == True: # checks if there are any removable drives, if found prints them
     print("\n" + "removable drives:")
-    removable_disks()
+    removable_disks(args.mono)
 else:
     pass
 
 if check_type(4) == True: # checks if there are any network drives, if found prints them
     print("\n" + "network drives:")
-    network_drives()
+    network_drives(args.mono, args.nopath)
 else:
     pass
 
 if check_type(5) == True: # checks if there are any optical drives, if found prints them
     print("\n" + "optical drives:")
-    optical_drives()
+    optical_drives(args.mono)
 else:
     pass
 
