@@ -308,6 +308,8 @@ parser.add_argument("-nt", "--nototals", help="does not display drive/memory tot
 parser.add_argument("-nm", "--nomemory", help="does not display memory totals [also boosts speed]", action="store_true")
 args = parser.parse_args()
 
+tic = time.time()
+
 print(f"\n{app_info.header}\n")
 print("local drives:")
 local_disk_drives(args.mono)
@@ -335,4 +337,9 @@ if args.nototals:
 else:
     totals(args.mono, args.nomemory)
 
-print("\n" + app_info.footer + "\n")
+toc = time.time()
+tictoc = round(toc - tic, 2)
+infoline2 = f"] xddi -h for help! ({tictoc}s) ["
+footer = infoline2.center(90,"-")
+
+print("\n" + footer + "\n")
