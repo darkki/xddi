@@ -336,5 +336,3 @@ else:
     totals(args.mono, args.nomemory)
 
 print("\n" + app_info.footer + "\n")
-
-print(args.mono)
