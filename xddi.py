@@ -229,7 +229,7 @@ def optical_drives(color = True): #function to handle network drives
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {description} (--.- %) / {total_space_kb} kb [{filesystem[0:5]}] - [---] [-----]")
 
-def totals(color = True):
+def totals(color, no_memory): # prints total drive and memory info
     all_space_total = 0
     all_space_free = 0
     for disk in c.Win32_LogicalDisk(DriveType=3):
@@ -253,41 +253,59 @@ def totals(color = True):
             all_space_total += round(total_space // 1000, 0)
     else:
         pass
-    all_used_percentage = round(100 - all_space_free / all_space_total * 100, 1)
-    all_used_percentage = str(all_used_percentage).rjust(23)
-    all_space_used = all_space_total - all_space_free
-    all_space_total = commafy(all_space_total).rjust(23)
-    all_space_used = commafy(all_space_used).rjust(23)
-    all_space_free = commafy(all_space_free).rjust(23)
     for cs in c.Win32_ComputerSystem():
         memory_total = int(cs.TotalPhysicalMemory)
     for perfos_mem in c.Win32_PerfFormattedData_PerfOS_Memory():
         memory_free = int(perfos_mem.AvailableBytes)
-    memory_total = round(memory_total // 1000, 0)
-    memory_free = round(memory_free // 1000, 0)
-    memory_used = memory_total - memory_free
-    memory_percentage = round(100 - memory_free / memory_total * 100, 1)
-    memory_percentage = str(memory_percentage).rjust(15)
-    memory_total = commafy(memory_total).rjust(15)
-    memory_free = commafy(memory_free).rjust(15)
-    memory_used = commafy(memory_used).rjust(15)
-    if color == True:
+    if no_memory:
+        all_used_percentage = round(100 - all_space_free / all_space_total * 100, 1)
+        all_used_percentage = str(all_used_percentage).rjust(24)
+        all_space_used = all_space_total - all_space_free
+        all_space_total = commafy(all_space_total).rjust(24)
+        all_space_used = commafy(all_space_used).rjust(22)
+        all_space_free = commafy(all_space_free).rjust(22)
+    else: #? querying memory creates major slowdown, is there way to speed things up?
+        all_used_percentage = round(100 - all_space_free / all_space_total * 100, 1)
+        all_used_percentage = str(all_used_percentage).rjust(23)
+        all_space_used = all_space_total - all_space_free
+        all_space_total = commafy(all_space_total).rjust(23)
+        all_space_used = commafy(all_space_used).rjust(23)
+        all_space_free = commafy(all_space_free).rjust(23)
+        memory_total = round(memory_total // 1000, 0)
+        memory_free = round(memory_free // 1000, 0)
+        memory_used = memory_total - memory_free
+        memory_percentage = round(100 - memory_free / memory_total * 100, 1)
+        memory_percentage = str(memory_percentage).rjust(15)
+        memory_total = commafy(memory_total).rjust(15)
+        memory_free = commafy(memory_free).rjust(15)
+        memory_used = commafy(memory_used).rjust(15)
+    if color == True and no_memory == False:
         print()
         print(f" total drivespace : {Style.BRIGHT}{all_space_total}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory      : {Style.BRIGHT}{memory_total}{Style.RESET_ALL} kb")
         print(f" total space used : {Style.BRIGHT}{all_space_used}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory used : {Style.BRIGHT}{memory_used}{Style.RESET_ALL} kb")
         print(f" total space free : {Style.BRIGHT}{all_space_free}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total memory free : {Style.BRIGHT}{memory_free}{Style.RESET_ALL} kb")
         print(f" percentage used  : {Style.BRIGHT}{all_used_percentage}{Style.RESET_ALL} %  {Style.BRIGHT}-{Style.RESET_ALL}   percentage used   : {Style.BRIGHT}{memory_percentage}{Style.RESET_ALL} %")
-    else:
+    elif color == False and no_memory == False:
         print()
         print(f" total drivespace : {all_space_total} kb -   total memory      : {memory_total} kb")
         print(f" total space used : {all_space_used} kb -   total memory used : {memory_used} kb")
         print(f" total space free : {all_space_free} kb -   total memory free : {memory_free} kb")
         print(f" percentage used  : {all_used_percentage} %  -   percentage used   : {memory_percentage} %")
+    elif color == True and no_memory == True:
+        print()
+        print(f" total drivespace: {Style.BRIGHT}{all_space_total}{Style.RESET_ALL} kb {Style.BRIGHT}-{Style.RESET_ALL}   total used : {Style.BRIGHT}{all_space_used}{Style.RESET_ALL} kb")
+        print(f" percentage used : {Style.BRIGHT}{all_used_percentage}{Style.RESET_ALL} %  {Style.BRIGHT}-{Style.RESET_ALL}   total free : {Style.BRIGHT}{all_space_free}{Style.RESET_ALL} kb")
+    elif color == False and no_memory == True:
+        print()
+        print(f" total drivespace: {all_space_total} kb -   total used : {all_space_used} kb")
+        print(f" percentage used : {all_used_percentage} %  -   total free : {all_space_free} kb")
 
-parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other information")
+parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other useful information")
 parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.4b")
 parser.add_argument("-m", "--mono", help="output in monochrome", action="store_false")
 parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
+parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals", action="store_true")
+parser.add_argument("-nm", "--nomemory", help="does not display memory totals [also boosts speed]", action="store_true")
 args = parser.parse_args()
 
 print(f"\n{app_info.header}\n")
@@ -312,7 +330,10 @@ if check_type(5) == True: # checks if there are any optical drives, if found pri
 else:
     pass
 
-totals(args.mono)
+if args.nototals:
+    pass
+else:
+    totals(args.mono, args.nomemory)
 
 print("\n" + app_info.footer + "\n")
 
