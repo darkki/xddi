@@ -126,9 +126,9 @@ def local_disk_drives(color = True): # function to handle local disk drives #TOD
         free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage, args.mono)}")
         else:
-            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage, args.mono)}")
 
 def check_type(drive_type): # checks if any drives of this type exists or not
     for disk in c.Win32_LogicalDisk(DriveType=drive_type):
@@ -161,9 +161,9 @@ def removable_disks(color = True): # function to handle removable disks
         else:
             flag_var += f"   "
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Fore.RED}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Fore.RED}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage, args.mono)}")
         else:
-            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage, args.mono)}")
 
 def network_drives(color = True, show_network_path = True): #function to handle network drives
     volume_name_space = 14
@@ -199,13 +199,13 @@ def network_drives(color = True, show_network_path = True): #function to handle 
             else:
                 flag_var += f"R/W"
         if color == True:
-            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage)}")
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [{Style.BRIGHT}{flag_var}{Style.RESET_ALL}] {used_bar(space_used_percentage, args.mono)}")
             if show_network_path:
                 print(f" {Style.BRIGHT}->{Style.RESET_ALL} {network_path_v2}")
             else:
                 pass
         else:
-            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage)}")
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [{flag_var}] {used_bar(space_used_percentage, args.mono)}")
             if show_network_path:
                 print(f" -> {network_path_v2}")
             else:
@@ -312,7 +312,7 @@ if check_type(5) == True: # checks if there are any optical drives, if found pri
 else:
     pass
 
-totals()
+totals(args.mono)
 
 print("\n" + app_info.footer + "\n")
 
