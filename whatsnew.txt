@@ -1,3 +1,11 @@
+v0.42b / 12/05/2020
+- Fixed monochrome output
+- Removed debug print line (no more "False" at end)
+- Added nototals and nomemory arguments
+- Added performance counter
+- Changed percentage used at totals to free to match rest of app
+- Optimized speed if memory totals not displayed
+
 v0.4b / 11/05/2020
 - Added argument parsing
 - Added read/write detection on network drives
