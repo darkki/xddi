@@ -253,10 +253,6 @@ def totals(color, no_memory): # prints total drive and memory info
             all_space_total += round(total_space // 1000, 0)
     else:
         pass
-    for cs in c.Win32_ComputerSystem():
-        memory_total = int(cs.TotalPhysicalMemory)
-    for perfos_mem in c.Win32_PerfFormattedData_PerfOS_Memory():
-        memory_free = int(perfos_mem.AvailableBytes)
     if no_memory:
         all_used_percentage = round(all_space_free / all_space_total * 100, 1)
         all_used_percentage = str(all_used_percentage).rjust(24)
@@ -265,6 +261,10 @@ def totals(color, no_memory): # prints total drive and memory info
         all_space_used = commafy(all_space_used).rjust(22)
         all_space_free = commafy(all_space_free).rjust(22)
     else: #? querying memory creates major slowdown, is there way to speed things up?
+        for cs in c.Win32_ComputerSystem():
+            memory_total = int(cs.TotalPhysicalMemory)
+        for perfos_mem in c.Win32_PerfFormattedData_PerfOS_Memory():
+            memory_free = int(perfos_mem.AvailableBytes)
         all_used_percentage = round(all_space_free / all_space_total * 100, 1)
         all_used_percentage = str(all_used_percentage).rjust(23)
         all_space_used = all_space_total - all_space_free
