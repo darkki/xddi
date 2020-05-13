@@ -229,6 +229,26 @@ def optical_drives(color = True): #function to handle network drives
         else:
             print(f" {letter} [{volume_name[0:volume_name_space]}] - {description} (--.- %) / {total_space_kb} kb [{filesystem[0:5]}] - [---] [-----]")
 
+def ram_disk_drives(color = True): # function to handle ram disk drives
+    volume_name_space = 14
+    volume_name_fillchar = " "
+    for disk in c.Win32_LogicalDisk(DriveType=6): # goes trough all logical disks
+        letter = disk.Caption
+        volume_name = disk.VolumeName.center(volume_name_space, volume_name_fillchar)
+        filesystem = disk.FileSystem.center(5)
+        free_space = int(disk.FreeSpace)
+        free_space_kb = round(free_space // 1000, 0)
+        total_space = int(disk.Size)
+        total_space_kb = round(total_space // 1000, 0)
+        space_used_percentage = round(free_space / total_space * 100, 1)
+        space_used_percentage_print = str(space_used_percentage).rjust(4)
+        free_space_kb = commafy(free_space_kb).rjust(14, " ")
+        total_space_kb = commafy(total_space_kb).rjust(14)
+        if color == True:
+            print(f" {Style.BRIGHT}{letter}{Style.RESET_ALL} [{Style.BRIGHT}{volume_name[0:volume_name_space]}{Style.RESET_ALL}] - {free_space_kb} ({Style.BRIGHT}{space_used_percentage_print} %{Style.RESET_ALL}) / {total_space_kb} kb [{Style.BRIGHT}{filesystem[0:5]}{Style.RESET_ALL}] - [---] {used_bar(space_used_percentage, args.mono)}")
+        else:
+            print(f" {letter} [{volume_name[0:volume_name_space]}] - {free_space_kb} ({space_used_percentage_print} %) / {total_space_kb} kb [{filesystem[0:5]}] - [---] {used_bar(space_used_percentage, args.mono)}")
+
 def totals(color, no_memory): # prints total drive and memory info
     all_space_total = 0
     all_space_free = 0
@@ -304,7 +324,7 @@ parser = argparse.ArgumentParser(prog="xddi", description="displays your local, 
 parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.42b")
 parser.add_argument("-m", "--mono", help="output in monochrome", action="store_false")
 parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
-parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals", action="store_true")
+parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals [also boosts speed]", action="store_true")
 parser.add_argument("-nm", "--nomemory", help="does not display memory totals [also boosts speed]", action="store_true")
 args = parser.parse_args()
 
@@ -329,6 +349,12 @@ else:
 if check_type(5) == True: # checks if there are any optical drives, if found prints them
     print("\n" + "optical drives:")
     optical_drives(args.mono)
+else:
+    pass
+
+if check_type(6) == True: # checks if there are any optical drives, if found prints them
+    print("\n" + "ram disk drives:")
+    ram_disk_drives(args.mono)
 else:
     pass
 
