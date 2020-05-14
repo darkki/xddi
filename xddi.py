@@ -324,8 +324,8 @@ parser = argparse.ArgumentParser(prog="xddi", description="displays your local, 
 parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.42b")
 parser.add_argument("-m", "--mono", help="output in monochrome (no colors)", action="store_false")
 parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
-parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals [also boosts speed]", action="store_true")
-parser.add_argument("-nm", "--nomemory", help="does not display memory totals [also boosts speed]", action="store_true")
+parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals (also boosts speed)", action="store_true")
+parser.add_argument("-nm", "--nomemory", help="does not display memory totals (also boosts speed)", action="store_true")
 args = parser.parse_args()
 
 tic = time.time()
