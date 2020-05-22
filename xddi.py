@@ -221,7 +221,7 @@ def optical_drives(color = True): #function to handle network drives
         total_space = int(disk.Size)
         total_space_kb = round(total_space // 1000, 0)
         description = str(disk.Description).rjust(14).upper()
-        free_space_kb = commafy(free_space_kb).rjust(14, " ")
+        # free_space_kb = commafy(free_space_kb).rjust(14, " ")
         total_space_kb = commafy(total_space_kb).rjust(14)
         # flag_var = "R/ "
         if color == True:
