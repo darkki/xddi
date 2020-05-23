@@ -1,3 +1,8 @@
+v0.43b / 23/05/2020
+- Fixed runtime error that happened if optical drive was present
+- Added ram disk support
+- Updated parser and argument info
+
 v0.42b / 12/05/2020
 - Fixed monochrome output
 - Removed debug print line (no more "False" at end)

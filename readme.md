@@ -1,4 +1,4 @@
-## xddi v0.42b by darkki
+## xddi v0.43b by darkki
 **xddi** [*xdiskdrive-info*] displays your local, network, removable, ram disk and optical drive usage and some other useful information in Windows CLI
 
 * you get speedier results if you do not display memory totals (first run with memory totals is always little slower)
@@ -9,4 +9,4 @@
 * -m, --mono       	output in monochrome (no colors)
 * -np, --nopath    	does not display network path
 * -nt, --nototals	does not display drive/memory totals (also boosts speed)
-* -nm, --nomemory  	does not display memory totals (also boosts speed)
+* -nm, --nomemory  	does not display memory totals (galso boosts speed)

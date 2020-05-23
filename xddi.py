@@ -19,7 +19,7 @@ class app_info:
     # version = "0.00-0d" # major.minor|patch-tweak / a=alpha, b=beta, rc=releasecanditate, d=development, r=release
     app = "xddi"
     by = "darkki"
-    version = "0.42b" # dev version #* Remember to modify parser, readme and whatnew versions too!
+    version = "0.43b" # dev version #* Remember to modify parser, readme and whatnew versions too!
     # infoline_beta = "] xDiSKDRiVE-iNFO v0.4b by darkk! ["
     infoline = f"] {app} v{version} by {by} ["
     header = infoline.center(90, "-")
@@ -321,7 +321,7 @@ def totals(color, no_memory): # prints total drive and memory info
         print(f" percentage free : {all_used_percentage} %  -   total free : {all_space_free} kb")
 
 parser = argparse.ArgumentParser(prog="xddi", description="displays your local, network, removable and optical drives with usage and other useful information")
-parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.42b")
+parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.43b")
 parser.add_argument("-m", "--mono", help="output in monochrome (no colors)", action="store_false")
 parser.add_argument("-np", "--nopath", help="does not display network path", action="store_false")
 parser.add_argument("-nt", "--nototals", help="does not display drive/memory totals (also boosts speed)", action="store_true")
